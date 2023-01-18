@@ -1,34 +1,29 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
+"use client";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+import styles from "./page.module.css";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const generatePdf = async () => {
+    console.log("hello");
+    const res = await fetch("http://localhost:3000/api/generatePdf", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      method: "POST", // You probably can use get aswell, you can use a post request with a custom body to generate dynamic data in your pdf view, I am going to cover that in a different post :)
+    });
+    return res.json();
+  };
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+        <button type="button" onClick={generatePdf}>
+          Create PDF
+        </button>
       </div>
 
       <div className={styles.center}>
@@ -87,5 +82,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
